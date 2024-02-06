@@ -1,0 +1,6 @@
+*
+!.gitignore
+!addcharacter.ts
+!getCharacterById.ts
+!getCharacters.ts
+!index.ts

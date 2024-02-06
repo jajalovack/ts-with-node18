@@ -1,0 +1,9 @@
+*
+!.gitignore
+!bulkData.ts
+!envVariables.ts
+!index.ts
+!lambda1.test.ts
+!lambda1.ts
+!lambda2.ts
+!dynamodbTest/
