@@ -1,16 +1,22 @@
 service: ts-with-node18
+useDotenv: true
 
 plugins:
   - serverless-esbuild # used for compiling/packaging the Typescript code
   - serverless-offline # used for local execution
+  - serverless-dotenv-plugin
 
 provider:
   name: aws
   runtime: nodejs18.x
-  region: ap-southeast-2
-  stage: ${opt:stage}
-  timeout: 30   # repository wide Lambda timeout
+  region: ap-southeast-1
+  stage: dev
+  #timeout: 30   # repository wide Lambda timeout
   environment:  # repository wide Lambda env variables
+    TABLE_NAME: ${env:TABLE_NAME}
+    ACCESS_KEY_ID: ${env:ACCESS_KEY_ID}
+    SECRET_ACCESS_KEY: ${env:SECRET_ACCESS_KEY}
+    REGION: ${env:REGION}
     STAGE: ${self:provider.stage}
 
 custom:
@@ -35,3 +41,18 @@ functions:
       - schedule:
           rate: cron(0 12 * * ? *) # triggers every 12 hours
           enabled: true
+  api:
+    handler: ./src/index.handler
+    events:
+       - http: 
+          path: /characters
+          method: GET
+       - http: 
+          path: /characters/{id}
+          method: GET
+       - http:
+          path: /envVariables
+          method: GET
+       - http:
+          path: /bulkData
+          method: POST          

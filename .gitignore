@@ -1,2 +1,5 @@
 node_modules
 .esbuild/
+.env
+config.js
+config.js.map
